@@ -1565,40 +1565,76 @@
         right: 10px;
         bottom: auto;
       }
-      /* Mobile Screen 6: Prevent 2x2 cut grid from colliding with tag-me or scissors */
+      /* Mobile Screen 6: Final pickup & cut mode layout without interference */
       .pickup-main-canvas-area {
-        min-height: 440px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        min-height: auto;
+        margin-bottom: 20px;
+        width: 100%;
+      }
+      .final-strip-container {
+        width: 107px;
+        margin-top: 40px;
+        margin-bottom: 14px;
       }
       .cut-photos-grid {
         width: 107px;
-        margin-top: 24px;
+        margin-top: 32px;
+        margin-bottom: 14px;
         gap: 8px;
       }
-      .compliment-doodle-cluster {
-        left: 6px;
-        bottom: 8px;
-        padding: 6px 10px;
-        max-width: 110px;
-      }
-      .compliment-text {
-        font-size: 0.95rem;
-      }
-      .compliment-sparkle-svg {
-        width: 22px;
-        height: 18px;
-      }
-      .btn-scissors-doodle {
-        right: 6px;
-        bottom: 8px;
-        width: 82px;
-        height: 82px;
-      }
+      /* Top-Right 'your photostrip!' + Looped Curly Arrow:
+         Anchored relative to the strip right edge so the arrow tip points cleanly 
+         at the top of the strip with a crisp ~14px gap and NEVER enters or touches the photos. */
       .your-photostrip-doodle {
-        right: 6px;
-        width: 138px;
+        position: absolute;
+        top: 8px;
+        left: calc(50% + 46px);
+        right: auto;
+        width: 114px;
+        pointer-events: none;
+        z-index: 10;
       }
       .pickup-main-canvas-area.cut-active .your-photostrip-doodle {
-        top: 24px;
-        right: 6px;
+        top: 20px;
+        left: calc(50% + 46px);
+        right: auto;
+      }
+      /* Compliment Badge:
+         Centered directly beneath the photostrip on mobile so it NEVER covers or touches 
+         any photo, has comfortable breathing room for text, and remains fully interactive. */
+      .compliment-doodle-cluster {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        margin: 4px auto 10px auto;
+        padding: 7px 18px;
+        max-width: 260px;
+        transform: rotate(-1.5deg);
+        z-index: 10;
+      }
+      .compliment-text {
+        font-size: 1.05rem;
+        line-height: 1.25;
+      }
+      .compliment-sparkle-svg {
+        width: 24px;
+        height: 19px;
+      }
+      /* Scissors Button:
+         Maintained comfortably on the lower right side alongside the strip where it has ample clearance 
+         and stays easily reachable for one-handed mobile tapping. */
+      .btn-scissors-doodle {
+        position: absolute;
+        right: 12px;
+        bottom: 64px;
+        width: 80px;
+        height: 80px;
+        z-index: 10;
       }
     }
