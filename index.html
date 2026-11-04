@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Our Photo Booth</title>
+  <meta name="description" content="An online vintage hand-drawn photo booth. Take 4 sequential photos with your webcam or upload pictures to create custom retro film strips with 9 hand-drawn frames and sketch filters. Completely free and runs 100% locally in your browser.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Patrick+Hand&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="state-landing">
+  <div id="booth-app">
+
+    <!-- =======================================================================
+         STAGE 1: EXTERIOR PHOTOBOOTH LANDING SCENE (Matches Screenshot 0)
+         ======================================================================= -->
+    <section class="stage-section active" id="stage-landing">
+      <div class="exterior-booth-scene">
+        <!-- Hand-Drawn Full Exterior Booth Line-Art SVG (3-Frame 150ms Boil) -->
+        <div class="exterior-svg-layer" data-boil-svg>
+          <svg viewBox="0 0 880 670" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hand-drawn exterior photobooth">
+            <!-- TOP MARQUEE SIGN BOX -->
+            <!-- Outer Marquee Rectangle -->
+            <path d="M92 26 Q320 25 546 28 Q548 80 546 132 Q320 135 90 134 Q91 80 92 26 Z" stroke="#000" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Inner Marquee Rectangle -->
+            <path d="M106 39 Q320 38 532 41 Q533 80 532 119 Q320 121 105 120 Q105 80 106 39 Z" stroke="#000" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- PHOTOBOOTH Geometric Uppercase Text -->
+            <text x="319" y="94" text-anchor="middle" font-family="Montserrat, Inter, sans-serif" font-size="43" font-weight="400" letter-spacing="3" fill="#000">PHOTOBOOTH</text>
+            <!-- Marquee Mounting Strut Posts (Left Pair & Right Pair) -->
+            <path d="M138 134 L138 155 M162 134 L162 155 M150 139 L150 151" stroke="#000" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M460 133 L460 155 M484 133 L484 155 M472 138 L472 151" stroke="#000" stroke-width="3.4" stroke-linecap="round"/>
+
+            <!-- MAIN BOOTH OUTER CHASSIS & ROOF CORNICE -->
+            <path d="M92 156 Q445 153 796 157 Q799 400 806 644 Q445 648 94 640 Q90 400 92 156 Z" stroke="#000" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Roof Horizontal Cornice Line -->
+            <path d="M92 192 Q445 188 796 190" stroke="#000" stroke-width="3.6" stroke-linecap="round"/>
+
+            <!-- VERTICAL BAY DIVIDERS (Left Wall | Center Doorway | Right Narrow Panel) -->
+            <path d="M435 190 Q434 415 438 644" stroke="#000" stroke-width="3.6" stroke-linecap="round"/>
+            <path d="M660 190 Q664 415 668 644" stroke="#000" stroke-width="3.6" stroke-linecap="round"/>
+
+            <!-- LEFT BAY: FEATURED STRIPS DOUBLE-BORDERED PICTURE FRAME -->
+            <path d="M140 216 Q268 214 394 218 Q396 292 394 366 Q268 368 141 366 Q139 292 140 216 Z" stroke="#000" stroke-width="3.4" stroke-linejoin="round"/>
+            <path d="M153 230 Q268 229 381 232 Q382 292 380 352 Q268 353 154 352 Q152 292 153 230 Z" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/>
+
+            <!-- Curved Arrow & 'try it!' Hand-Lettered Annotation -->
+            <path d="M376 400 C394 392, 392 380, 376 372" stroke="#000" stroke-width="2.8" stroke-linecap="round"/>
+            <path d="M374 381 L375 372 L384 374" stroke="#000" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="374" y="436" text-anchor="middle" font-family="Patrick Hand, cursive" font-size="28" font-weight="400" letter-spacing="1.2" fill="#000">try it!</text>
+
+            <!-- LEFT BAY: MECHANICAL COIN PLATE & DISPENSER SLOT (1:1 Match with Reference Landing) -->
+            <!-- Top Square Plate with 4 Corner Screw Rings & Block Down Arrow -->
+            <path d="M248 426 Q268 425 288 426 Q289 446 288 466 Q268 467 248 466 Q247 446 248 426 Z" stroke="#000" stroke-width="3.2" fill="#fdfdfd" stroke-linejoin="round"/>
+            <circle cx="254" cy="432" r="2.2" stroke="#000" stroke-width="1.8" fill="#fff"/>
+            <circle cx="282" cy="432" r="2.2" stroke="#000" stroke-width="1.8" fill="#fff"/>
+            <circle cx="254" cy="460" r="2.2" stroke="#000" stroke-width="1.8" fill="#fff"/>
+            <circle cx="282" cy="460" r="2.2" stroke="#000" stroke-width="1.8" fill="#fff"/>
+            <!-- Block Down Arrow matching Reference -->
+            <path d="M265 452 H271 V455.5 H274.5 L268 462.5 L261.5 455.5 H265 Z" stroke="#000" stroke-width="1.8" stroke-linejoin="round" fill="#fff"/>
+
+            <!-- Lower Vertical Rectangular Dispenser Box matching Reference -->
+            <path d="M247 472 Q268 471 289 472 Q290 516 289 560 Q268 561 247 560 Q246 516 247 472 Z" stroke="#000" stroke-width="3.2" stroke-linejoin="round" fill="none"/>
+            <path d="M254 480 Q268 479 282 480 Q283 516 282 553 Q268 554 254 553 Q253 516 254 480 Z" stroke="#000" stroke-width="2.6" stroke-linejoin="round" fill="none"/>
+            <!-- Redrawn Chunky T-Bar: Top Horizontal Bar Line & Integrated Bottom Horizontal + Vertical Bar -->
+            <path d="M254 493 L282 493" stroke="#000" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M254 498.5 L266 498.5 L266 553 M270 553 L270 498.5 L282 498.5" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+            <!-- CENTER BAY: WAVY CURTAIN & ROUND STOOL PEEKING OUT -->
+            <!-- Curtain Outer Left & Bottom Scalloped Hem -->
+            <path d="M498 190 C490 225, 514 260, 504 310 C495 360, 508 415, 510 470 C524 468, 540 482, 558 474 C576 485, 594 468, 612 478 C630 486, 646 472, 664 476" stroke="#000" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Curtain Interior Vertical Fold Lines -->
+            <path d="M542 190 C534 245, 556 300, 546 375 C540 415, 548 445, 554 473" stroke="#000" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M578 214 C592 275, 570 340, 588 415 C593 438, 590 458, 594 474" stroke="#000" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M620 190 C612 240, 628 290, 622 355 C618 400, 632 440, 628 480" stroke="#000" stroke-width="3.2" stroke-linecap="round"/>
+            <path d="M648 210 C642 260, 654 310, 646 365" stroke="#000" stroke-width="3" stroke-linecap="round"/>
+
+            <!-- Stool Seat, Post & Floor Base Below Curtain -->
+            <path d="M510 472 C492 482, 502 504, 558 504 C612 504, 624 484, 610 477" stroke="#000" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M500 492 C502 518, 614 520, 618 492" stroke="#000" stroke-width="3.4" stroke-linecap="round"/>
+            <!-- Stool Vertical Stem -->
+            <path d="M552 514 L555 606 M570 514 L573 606" stroke="#000" stroke-width="3.4" stroke-linecap="round"/>
+            <!-- Stool Base Oval -->
+            <path d="M553 595 C520 598, 520 622, 564 622 C608 622, 608 598, 573 595" stroke="#000" stroke-width="3.4" stroke-linecap="round"/>
+
+            <!-- RIGHT NARROW BAY: MIRROR WINDOW WITH '//' REFLECTION MARKS -->
+            <path d="M688 212 Q732 211 776 213 Q778 308 776 402 Q732 404 689 402 Q687 308 688 212 Z" stroke="#000" stroke-width="3.4" stroke-linejoin="round"/>
+            <!-- Top-Left Diagonal Glass Reflection Ticks -->
+            <path d="M706 238 L724 226 M712 246 L732 233" stroke="#000" stroke-width="3.2" stroke-linecap="round"/>
+            <!-- Bottom-Right Diagonal Glass Reflection Ticks -->
+            <path d="M734 384 L754 371 M742 391 L760 380" stroke="#000" stroke-width="3.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Interactive Hotspot 1: 5 Tilted Featured Strips inside Left Frame -->
+        <div class="featured-strips-hotspot" id="btnFeaturedBoard" title="View Recommended Poses">
+          <div class="mini-strip-thumb">
+            <div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div>
+          </div>
+          <div class="mini-strip-thumb">
+            <div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div>
+          </div>
+          <div class="mini-strip-thumb">
+            <div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div>
+          </div>
+          <div class="mini-strip-thumb">
+            <div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div>
+          </div>
+          <div class="mini-strip-thumb">
+            <div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div><div class="mini-strip-cell"></div>
+          </div>
+        </div>
+
+        <!-- Interactive Hotspot 2: Crisp Rectangular 'enter ->]' Button on Curtain -->
+        <div class="enter-btn-hotspot">
+          <button class="btn-sketch-enter" id="btnEnter">
+            <span>enter &rarr;]</span>
+          </button>
+        </div>
+
+        <!-- Bottom-Left Creator Attribution inside Booth Wall -->
+        <div class="booth-wall-attribution">
+          <span>Inspired by @visarchivess</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STAGE 2: SHARED INTERIOR CONTROL PANEL (Matches Screenshots 1 & 2)
+         Houses #view-frames, #view-source, #view-camera, #view-upload, #view-error
+         ======================================================================= -->
+    <section class="stage-section" id="stage-interior">
+      <div class="interior-control-panel">
+
+        <!-- Double-line lightbox indicator above monitor (matching live site) -->
+        <div class="interior-lightbox-box" data-boil-svg>
+          <svg viewBox="0 0 76 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 3 Q38 1 73 3 Q74 11 73 19 Q38 21 3 19 Q2 11 3 3 Z" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M8 6 Q38 5 68 6 Q69 11 68 16 Q38 17 8 16 Q7 11 8 6 Z" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- TOP ROW: [eye level ->] [Double-Bordered 3:4 Monitor] [$0 = 4pics] -->
+        <div class="interior-top-row">
+          <!-- Left: 'eye -> level' Hand-Drawn Arrow -->
+          <div class="eye-level-annotation" data-boil-svg>
+            <svg viewBox="0 0 120 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text x="48" y="25" text-anchor="middle" font-family="Patrick Hand, cursive" font-size="26" font-weight="700" fill="#000">eye</text>
+              <path d="M10 34 L104 34 M84 22 L106 34 L84 46" stroke="#000" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="48" y="58" text-anchor="middle" font-family="Patrick Hand, cursive" font-size="24" font-weight="700" fill="#000">level</text>
+            </svg>
+          </div>
+
+          <!-- Center: Double-Bordered 3:4 Monitor Frame -->
+          <div class="crt-monitor-box">
+            <div class="crt-bezel-svg" data-boil-svg>
+              <svg viewBox="0 0 330 416" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer Monitor Border -->
+                <path d="M8 8 Q165 6 322 9 Q324 208 321 408 Q165 410 10 407 Q7 208 8 8 Z" stroke="#000" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Inner Screen Bezel -->
+                <path d="M32 32 Q165 31 298 34 Q299 208 297 383 Q165 385 33 382 Q31 208 32 32 Z" stroke="#000" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <!-- Inner Monitor Viewport -->
+            <div class="crt-inner-viewport">
+              <!-- SCREEN 2: FRAME SELECTION CAROUSEL -->
+              <div class="screen-view active" id="view-frames">
+                <div class="carousel-container">
+                  <button class="btn-arrow" id="btnPrevFrame" aria-label="Previous Frame">
+                    <svg width="18" height="26" viewBox="0 0 18 26" fill="none">
+                      <path d="M13 5L5 13L13 21" stroke="#000000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <div class="frame-preview-card" id="framePreviewCard" title="Click or press Green Button to select">
+                    <!-- Dynamic Canvas photostrip preview -->
+                  </div>
+                  <button class="btn-arrow" id="btnNextFrame" aria-label="Next Frame">
+                    <svg width="18" height="26" viewBox="0 0 18 26" fill="none">
+                      <path d="M5 5L13 13L5 21" stroke="#000000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="frame-name-subtle" id="frameTitleBadge">Classic Grey Original</div>
+              </div>
+
+              <!-- SCREEN 3: SOURCE SELECTOR ('take photo' / 'upload photo') -->
+              <div class="screen-view" id="view-source">
+                <div class="source-buttons-wrapper">
+                  <button class="btn-source-card" id="btnModeCamera">
+                    <span>take photo</span>
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                      <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                  </button>
+                  <button class="btn-source-card" id="btnModeUpload">
+                    <span>upload photo</span>
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                  </button>
+                  <button type="button" class="btn-mini-helper" id="btnBackToFrames" style="margin-top:4px;">← change frame</button>
+                </div>
+              </div>
+
+              <!-- SCREEN 4A: LIVE CAMERA WORKFLOW -->
+              <div class="screen-view" id="view-camera">
+                <div class="camera-monitor">
+                  <video id="webcamVideo" class="filter-bw" autoplay playsinline muted></video>
+                  <canvas id="cameraStreamCanvas" class="hidden-canvas"></canvas>
+                  <div class="countdown-overlay" id="countdownOverlay">3</div>
+                  <div class="shot-counter-badge" id="shotCounterBadge">SHOT 1/4</div>
+                  <button type="button" class="btn-mini-helper" id="btnCameraBack" style="position:absolute;top:8px;right:8px;z-index:25;">← back</button>
+                  <div class="camera-status-banner" id="cameraStatusBanner">Click green 'start' button!</div>
+                </div>
+              </div>
+
+              <!-- SCREEN 4B: 2x2 PHOTO UPLOAD WORKFLOW -->
+              <div class="screen-view" id="view-upload">
+                <div class="upload-monitor-wrap">
+                  <div class="upload-grid-2x2">
+                    <div class="upload-slot" data-index="0" id="slot-0">
+                      <input type="file" accept="image/*" class="file-input" id="file-0">
+                      <div class="slot-placeholder"><span>+ Pic 1</span></div>
+                      <img class="slot-preview" alt="Slot 1">
+                      <span class="slot-replace-badge">Replace</span>
+                    </div>
+                    <div class="upload-slot" data-index="1" id="slot-1">
+                      <input type="file" accept="image/*" class="file-input" id="file-1">
+                      <div class="slot-placeholder"><span>+ Pic 2</span></div>
+                      <img class="slot-preview" alt="Slot 2">
+                      <span class="slot-replace-badge">Replace</span>
+                    </div>
+                    <div class="upload-slot" data-index="2" id="slot-2">
+                      <input type="file" accept="image/*" class="file-input" id="file-2">
+                      <div class="slot-placeholder"><span>+ Pic 3</span></div>
+                      <img class="slot-preview" alt="Slot 3">
+                      <span class="slot-replace-badge">Replace</span>
+                    </div>
+                    <div class="upload-slot" data-index="3" id="slot-3">
+                      <input type="file" accept="image/*" class="file-input" id="file-3">
+                      <div class="slot-placeholder"><span>+ Pic 4</span></div>
+                      <img class="slot-preview" alt="Slot 4">
+                      <span class="slot-replace-badge">Replace</span>
+                    </div>
+                  </div>
+                  <div class="upload-helper-row">
+                    <button type="button" class="btn-mini-helper" id="btnUploadBack">← back</button>
+                    <button type="button" class="btn-mini-helper" id="btnFillSamplePhotos">✦ sample pics</button>
+                    <button type="button" class="btn-mini-helper disabled" id="btnProceedUpload">print →</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SCREEN 7: CAMERA ERROR FALLBACK -->
+              <div class="screen-view" id="view-error">
+                <div class="error-card">
+                  <h2>Camera Access Error</h2>
+                  <p id="cameraErrorMsg">Unable to access camera. Please allow permissions or upload photos instead.</p>
+                  <div class="error-buttons">
+                    <button class="btn-crisp-box" id="btnErrorUpload" style="font-size:0.8rem;padding:6px 12px;">Upload Photos</button>
+                    <button class="btn-crisp-box" id="btnErrorSample" style="font-size:0.8rem;padding:6px 12px;">Use Sample Photos</button>
+                    <button class="btn-crisp-box" id="btnErrorHome" style="font-size:0.8rem;padding:6px 12px;">Homepage</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: '$0 = 4pics' Hand-Drawn Circle Sticker -->
+          <div class="price-sticker-annotation" data-boil-svg>
+            <svg viewBox="0 0 116 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M58 8 C90 7, 108 32, 106 60 C104 90, 82 106, 54 105 C24 104, 8 82, 10 54 C12 24, 32 9, 58 8 Z" stroke="#000" stroke-width="3.2" stroke-linecap="round"/>
+              <text x="58" y="42" text-anchor="middle" font-family="Patrick Hand, cursive" font-size="25" font-weight="700" fill="#000">$0</text>
+              <text x="58" y="61" text-anchor="middle" font-family="Patrick Hand, cursive" font-size="22" font-weight="700" fill="#000">=</text>
+              <text x="58" y="83" text-anchor="middle" font-family="Patrick Hand, cursive" font-size="25" font-weight="700" fill="#000">4pics</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- MIDDLE ROW: b&w [3D Cylindrical Toggle Lever SVG] color -->
+        <div class="filter-toggle-wrapper">
+          <span class="toggle-label" id="lblBw">b&amp;w</span>
+          <label class="switch-3d-peg" aria-label="Toggle B&W or Color filter">
+            <input type="checkbox" id="filterToggleCheckbox">
+            <!-- Clean Minimalist 2D Bat Toggle Switch (B&W mode) -->
+            <svg id="pegSvgBw" viewBox="0 0 84 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Stationary Concentric Collar Base at cx=42, cy=22 -->
+              <circle cx="42" cy="22" r="15" fill="#ffffff" stroke="#000" stroke-width="3.2"/>
+              <circle cx="42" cy="22" r="9.5" fill="#ffffff" stroke="#000" stroke-width="2.2"/>
+              <circle cx="42" cy="22" r="5" fill="#111111"/>
+
+              <!-- Sleek Bat Lever Left -->
+              <path d="M 42 18 L 19 15.5 C 13 15.5, 9 18.5, 9 22 C 9 25.5, 13 28.5, 19 28.5 L 42 26 Z" fill="#ffffff" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/>
+              <line x1="14" y1="19.5" x2="22" y2="19.5" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <!-- Clean Minimalist 2D Bat Toggle Switch (Color mode) -->
+            <svg id="pegSvgColor" viewBox="0 0 84 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+              <!-- Stationary Concentric Collar Base at cx=42, cy=22 (identical to B&W) -->
+              <circle cx="42" cy="22" r="15" fill="#ffffff" stroke="#000" stroke-width="3.2"/>
+              <circle cx="42" cy="22" r="9.5" fill="#ffffff" stroke="#000" stroke-width="2.2"/>
+              <circle cx="42" cy="22" r="5" fill="#111111"/>
+
+              <!-- Sleek Bat Lever Right -->
+              <path d="M 42 18 L 65 15.5 C 71 15.5, 75 18.5, 75 22 C 75 25.5, 71 28.5, 65 28.5 L 42 26 Z" fill="#ffffff" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/>
+              <line x1="70" y1="19.5" x2="62" y2="19.5" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </label>
+          <span class="toggle-label" id="lblColor">color</span>
+        </div>
+
+        <!-- BOTTOM ROW: [3-Column Instruction Plaque] + [Vertical Coin & LED Button Panel] -->
+        <div class="interior-bottom-row">
+          <!-- Left: 3-Column Hand-Drawn Rounded-Rectangle Instruction Plaque -->
+          <div class="instruction-plaque-3col">
+            <div class="instruction-plaque-svg" data-boil-svg>
+              <svg viewBox="0 0 530 164" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 6 Q265 4 498 8 C518 9, 525 28, 524 82 C523 136, 516 154, 496 156 Q265 159 34 156 C14 155, 6 136, 6 82 C6 28, 14 7, 32 6 Z" stroke="#000" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="inst-col">
+              <span class="inst-num">1</span>
+              <p>Choose b&amp;w or<br>color filters with<br>the toggle switch</p>
+            </div>
+            <div class="inst-divider"></div>
+            <div class="inst-col">
+              <span class="inst-num">2</span>
+              <p>Choose a frame<br>using arrows &amp; click<br>green button to select</p>
+            </div>
+            <div class="inst-divider"></div>
+            <div class="inst-col">
+              <span class="inst-num">3</span>
+              <p>Press green button<br>to take photo &amp; wait<br>for them to be printed</p>
+            </div>
+          </div>
+
+          <!-- Right: Vertical Coin Panel & Circular Green/Red LED Button -->
+          <div class="coin-panel-column">
+            <div class="coin-action-label" id="greenBtnLabel">select</div>
+            <div class="coin-panel-chassis">
+              <div class="coin-panel-svg" data-boil-svg>
+                <svg viewBox="0 0 84 164" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Outer Vertical Panel Box -->
+                  <path d="M5 5 Q42 4 79 5 Q80 82 79 159 Q42 160 5 159 Q4 82 5 5 Z" stroke="#000" stroke-width="3.5" stroke-linejoin="round"/>
+                  <!-- Middle Vertical Coin Slit -->
+                  <path d="M37 58 L47 58 L47 92 L37 92 Z" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/>
+                  <!-- Bottom Square Coin Return Cup -->
+                  <path d="M22 112 L62 112 L62 152 L22 152 Z" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <!-- Top Circular Green/Red LED Button -->
+              <button class="physical-green-button" id="btnGreenSelect" aria-label="Select Action"></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STAGE 3: PRINTING & T-BAR CHUTE DISPENSING (Matches Screenshot 3)
+         ======================================================================= -->
+    <section class="stage-section" id="stage-printing">
+      <div class="printing-stage-wrap" id="view-printing">
+        <!-- Top Square Metal Plaque with 4 Corner Screws -->
+        <div class="delivery-plaque-box">
+          <div class="delivery-plaque-svg" data-boil-svg>
+            <svg viewBox="0 0 192 174" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 6 Q96 5 186 7 Q187 87 186 168 Q96 169 6 168 Q5 87 6 6 Z" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/>
+              <circle cx="20" cy="20" r="6" stroke="#000" stroke-width="2.6"/>
+              <circle cx="172" cy="20" r="6" stroke="#000" stroke-width="2.6"/>
+              <circle cx="20" cy="154" r="6" stroke="#000" stroke-width="2.6"/>
+              <circle cx="172" cy="154" r="6" stroke="#000" stroke-width="2.6"/>
+            </svg>
+          </div>
+          <div class="delivery-plaque-text">
+            PHOTOS<br>DELIVERED<br>HERE IN<br><span id="deliverySeconds">3</span> SECONDS
+          </div>
+          <svg class="delivery-down-arrow" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 3 H21 V13 H28 L16 25 L4 13 H11 V3 Z" stroke="#000" stroke-width="2.4" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Middle Tall Double-Bordered Dispensing Chute with T-Bar Retaining Cage -->
+        <div class="dispensing-chute-frame">
+          <div class="chute-outer-svg" data-boil-svg>
+            <svg viewBox="0 0 192 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Outer Chute Frame -->
+              <path d="M6 6 Q96 4 186 6 Q188 215 186 424 Q96 426 6 424 Q5 215 6 6 Z" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/>
+              <!-- Inner Chute Window Border -->
+              <path d="M36 34 Q96 33 156 35 Q157 215 156 396 Q96 397 36 396 Q35 215 36 34 Z" stroke="#000" stroke-width="3.2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Inner Clipping Window where Photostrip Slides Down -->
+          <div class="chute-inner-aperture">
+            <div class="emerging-strip-wrapper" id="emergingStrip">
+              <canvas id="liveCompositeCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Front T-Shaped Grey Metal Retaining Cage Bar (Rendered OVER the Strip!) -->
+          <div class="chute-tbar-overlay" data-boil-svg>
+            <svg viewBox="0 0 192 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M36 138 L156 138 L156 150 L102 150 L102 396 L90 396 L90 150 L36 150 Z" fill="#808080" stroke="#000" stroke-width="2.8" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Wide Bottom 'Pick up ->' Button -->
+        <button class="btn-crisp-box btn-pickup-wide" id="btnPickupStrip">
+          <span>Pick up</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         STAGE 4: FINAL PICKUP, SOCIAL DOODLES & SCISSORS (Matches Screenshot 4)
+         ======================================================================= -->
+    <section class="stage-section" id="stage-export">
+      <div class="pickup-stage-wrap" id="view-export">
+        <div class="pickup-main-canvas-area">
+
+          <!-- Top-Right 'your photostrip!' + Looped Curly Arrow -->
+          <div class="your-photostrip-doodle" data-boil-svg>
+            <svg viewBox="0 0 210 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text class="doodle-line-1" x="42" y="34" font-family="Patrick Hand, cursive" font-size="36" font-weight="700" fill="#222">your</text>
+              <text class="doodle-line-2" x="62" y="66" font-family="Patrick Hand, cursive" font-size="36" font-weight="700" fill="#222">photostrip!</text>
+              <!-- Looped Curly Arrow Pointing Left -->
+              <path d="M118 82 C115 104, 92 108, 92 95 C92 84, 110 86, 106 102 C100 118, 68 122, 42 116" stroke="#222" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+              <path d="M50 108 L40 116 L51 122" stroke="#222" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+
+          <!-- Center 1x4 Photostrip Container (or 4 Cut Photos Grid) -->
+          <div class="final-strip-container" id="finalStripContainer" title="Click to download PNG"></div>
+          <div class="cut-photos-grid" id="cutPhotosGrid"></div>
+
+          <!-- Bottom-Left Handwritten Compliment Badge (Cycles 10 uplifting compliments) -->
+          <div class="compliment-doodle-cluster" id="complimentDoodle" title="Click for another compliment!">
+            <svg class="compliment-sparkle-svg" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Hand-drawn 4-point sparkle star -->
+              <path d="M 16 2 Q 16 12 6 12 Q 16 12 16 22 Q 16 12 26 12 Q 16 12 16 2 Z" fill="#facc15" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
+              <!-- Small companion sparkle -->
+              <path d="M 27 3 Q 27 7 23 7 Q 27 7 27 11 Q 27 7 31 7 Q 27 7 27 3 Z" fill="#facc15" stroke="#000" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+            <p class="compliment-text" id="complimentText">You look stunning! ✨</p>
+          </div>
+
+          <!-- Bottom-Right Diagonal Hand-Drawn Open Scissors Button -->
+          <button class="btn-scissors-doodle" id="btnScissorsCut" title="Cut strip into 4 individual photos!">
+            <div id="scissorsIconWrap" data-boil-svg>
+              <svg viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Left/Vertical Blade -->
+                <path d="M46 58 L30 14 C28 18, 34 45, 40 62 Z" fill="#f6f6f6" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+                <!-- Upper-Left Diagonal Blade -->
+                <path d="M52 52 L12 28 C14 34, 36 52, 46 58 Z" fill="#f6f6f6" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+                <!-- Pivot Screw -->
+                <circle cx="46" cy="56" r="2.2" fill="#000"/>
+                <!-- Bottom Finger Ring Loop -->
+                <path d="M42 60 L38 78 C34 90, 44 98, 54 96 C62 94, 62 82, 54 74 L46 60" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+                <ellipse cx="48" cy="85" rx="6" ry="8" stroke="#000" stroke-width="2.6"/>
+                <!-- Right Finger Ring Loop -->
+                <path d="M50 53 L74 58 C88 61, 94 72, 90 82 C86 90, 74 88, 66 76 L48 58" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+                <ellipse cx="78" cy="73" rx="8" ry="6" transform="rotate(25 78 73)" stroke="#000" stroke-width="2.6"/>
+              </svg>
+            </div>
+            <div id="backDoodleWrap" style="display:none;" data-boil-svg>
+              <svg viewBox="0 0 110 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="50" y="32" text-anchor="middle" font-family="Patrick Hand, cursive" font-size="28" font-weight="700" fill="#000">back</text>
+                <path d="M78 44 C82 62, 54 72, 28 66 C22 64, 18 60, 14 56 M14 56 L24 52 M14 56 L18 66" stroke="#000" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </button>
+
+        </div>
+
+        <!-- Bottom Horizontal 4-Button Action Bar (download | share | print | restart) -->
+        <div class="export-actions-toolbar">
+          <button class="btn-crisp-box" id="btnDownload">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>download</span>
+          </button>
+          <button class="btn-crisp-box" id="btnShare">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <span>share</span>
+          </button>
+          <button class="btn-crisp-box" id="btnPrint">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            <span>print</span>
+          </button>
+          <button class="btn-crisp-box" id="btnRetake">
+            <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            <span>restart</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Subtle Floating Utility Controls (SFX Toggle & Live Frame Switcher) -->
+    <div class="floating-utility-pill">
+      <button class="btn-util-pill" id="btnSwitchFrameLive" style="display:none;" title="Try other frames on your photostrip">🎨 frame</button>
+      <button class="btn-util-pill" id="btnAudioToggle" title="Toggle Retro Sound Effects">🔊 SFX: ON</button>
+    </div>
+
+    <!-- INFO & FEATURED STRIPS MODAL POPUP -->
+    <div class="modal-backdrop" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+      <div class="modal-card" id="infoModalCard">
+        <button class="modal-close" id="btnCloseInfoModal" aria-label="Close">×</button>
+        <h3 id="infoModalTitle">FAQ</h3>
+        <div class="modal-body-content" id="infoModalBody"></div>
+        <button class="btn-crisp-box" id="btnDismissInfoModal">Close</button>
+      </div>
+    </div>
+
+    <!-- WHITE FLASH SCREEN OVERLAY -->
+    <div class="camera-flash-overlay" id="flashOverlay"></div>
+  </div>
+    <script src="assets/ppg_poses.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/frames.js"></script>
+  <script src="js/filter.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

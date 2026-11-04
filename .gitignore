@@ -1,0 +1,13 @@
+# Development & Browser Automation Temp
+.chrome_temp/
+.agents/
+test_assets/
+scratch/
+
+# Monolith Backup
+*.bak.html
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini

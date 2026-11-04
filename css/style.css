@@ -1,0 +1,1604 @@
+:root {
+      --bg: #f6f6f6;
+      --bg-dark: #121212;
+      --paper: #f6f6f6;
+      --paper-aged: #f5eedf;
+      --ink: #000000;
+      --ink-slate: #1e293b;
+      --ink-dim: #4b5563;
+      --ink-muted: #9ca3af;
+      --ink-faint: rgba(0, 0, 0, 0.12);
+      --btn-fill: #f1f5f9;
+      --btn-border: 2.5px solid #1e293b;
+      --green-btn: #10b981;
+      --green-shadow: #059669;
+      --red-lamp: #f87171;
+      --red-glow: rgba(248, 113, 113, 0.5);
+      --pastel-pink: #f8d5db;
+      --pastel-grey: #e5e5e5;
+      --pastel-beige: #fbf5e8;
+      --night-black: #111111;
+      --pad: clamp(12px, 2vw, 24px);
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --strip-width: 480px;
+      --strip-height: 1440px;
+    }
+
+    html {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      background-color: var(--bg);
+      padding: 16px var(--pad) 24px;
+      position: relative;
+    }
+
+    #booth-app {
+      width: 100%;
+      max-width: 920px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Crisp Geometric Button Style (matching 'enter ->]', 'take photo', 'Pick up ->', 'download', etc.) */
+    .btn-crisp-box {
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--ink-slate);
+      background: var(--btn-fill);
+      border: var(--btn-border);
+      padding: 10px 24px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+      user-select: none;
+      text-decoration: none;
+    }
+
+    .btn-crisp-box:hover:not(.disabled) {
+      background: #111827;
+      color: #ffffff;
+    }
+
+    .btn-crisp-box:active:not(.disabled) {
+      transform: scale(0.98);
+    }
+
+    .btn-crisp-box.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* Screen visibility management */
+    .stage-section {
+      display: none;
+      width: 100%;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: stageFadeIn 0.24s ease-out;
+    }
+
+    .stage-section.active {
+      display: flex;
+    }
+
+    @keyframes stageFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================================================
+       STAGE 1: EXTERIOR PHOTOBOOTH LANDING SCENE (#view-landing)
+       ========================================================================= */
+    .exterior-booth-scene {
+      position: relative;
+      width: 100%;
+      max-width: 780px;
+      aspect-ratio: 880 / 670;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    .exterior-svg-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .exterior-svg-layer svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    /* Featured Strips Pinboard Hotspot inside the Left Bay Frame */
+    .featured-strips-hotspot {
+      position: absolute;
+      left: 17.4%;
+      top: 34.3%;
+      width: 26.0%;
+      height: 18.2%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.2s var(--ease);
+      box-sizing: border-box;
+    }
+
+    .featured-strips-hotspot:hover {
+      transform: scale(1.02);
+    }
+
+    .mini-strip-thumb {
+      height: 74%;
+      aspect-ratio: 1 / 4.4;
+      background: #1a1a1a;
+      padding: 1.2px 1.2px 2.8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.24);
+      transition: transform 0.2s ease;
+      box-sizing: border-box;
+      border-radius: 0.5px;
+    }
+
+    .mini-strip-thumb:nth-child(1) { transform: rotate(-1.8deg) translateY(4px); background: #dcd4c8; }
+    .mini-strip-thumb:nth-child(2) { transform: rotate(0.8deg) translateY(-3px); background: #f5f2eb; }
+    .mini-strip-thumb:nth-child(3) { transform: rotate(1.6deg) translateY(2px); background: #1c1c1c; }
+    .mini-strip-thumb:nth-child(4) { transform: rotate(-1.2deg) translateY(-2px); background: #111111; }
+    .mini-strip-thumb:nth-child(5) { transform: rotate(1.8deg) translateY(3px); background: #ffffff; }
+
+    .featured-strips-hotspot:hover .mini-strip-thumb:nth-child(1) { transform: rotate(-3deg) translateY(3px) scale(1.06); }
+    .featured-strips-hotspot:hover .mini-strip-thumb:nth-child(2) { transform: rotate(2deg) translateY(-4px) scale(1.06); }
+    .featured-strips-hotspot:hover .mini-strip-thumb:nth-child(3) { transform: rotate(2.5deg) translateY(1px) scale(1.06); }
+    .featured-strips-hotspot:hover .mini-strip-thumb:nth-child(4) { transform: rotate(-2.2deg) translateY(-3px) scale(1.06); }
+    .featured-strips-hotspot:hover .mini-strip-thumb:nth-child(5) { transform: rotate(3deg) translateY(2px) scale(1.06); }
+
+    .mini-strip-cell {
+      width: 100%;
+      height: 22.8%;
+      background: #b8afa6;
+      overflow: hidden;
+      position: relative;
+      border-radius: 0.5px;
+    }
+
+    /* Distinct realistic vintage tones for the 5 strips matching reference */
+    .mini-strip-thumb:nth-child(1) .mini-strip-cell { background: #b5a999; }
+    .mini-strip-thumb:nth-child(2) .mini-strip-cell { background: #c8c2b9; }
+    .mini-strip-thumb:nth-child(3) .mini-strip-cell { background: #8e8882; }
+    .mini-strip-thumb:nth-child(4) .mini-strip-cell { background: #68635e; }
+    .mini-strip-thumb:nth-child(5) .mini-strip-cell { background: #adaba7; }
+
+    /* Tiny portrait silhouette inside featured strip cells */
+    .mini-strip-cell::before {
+      content: "";
+      position: absolute;
+      width: 46%;
+      height: 46%;
+      border-radius: 50%;
+      background: #3a3532;
+      top: 16%;
+      left: 27%;
+    }
+    .mini-strip-cell::after {
+      content: "";
+      position: absolute;
+      width: 74%;
+      height: 44%;
+      border-radius: 50% 50% 0 0;
+      background: #2b2725;
+      bottom: -8%;
+      left: 13%;
+    }
+
+    /* Center 'enter ->]' Button Hotspot on the Curtain (Aligned to Curtain Doorway Center) */
+    .enter-btn-hotspot {
+      position: absolute;
+      left: 62.3%;
+      top: 52.6%;
+      transform: translate(-50%, -50%);
+      z-index: 15;
+    }
+
+    .btn-sketch-enter {
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      font-size: clamp(0.96rem, 1.45vw, 1.15rem);
+      font-weight: 500;
+      color: var(--ink-slate);
+      background: var(--btn-fill);
+      border: 2.5px solid #1e293b;
+      width: clamp(124px, 16.5vw, 148px);
+      height: clamp(50px, 6.8vw, 62px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-sketch-enter:hover {
+      background: #111827;
+      color: #ffffff;
+    }
+
+    /* Lower-left 'Inspired by @visarchivess' inside the booth wall */
+    .booth-wall-attribution {
+      position: absolute;
+      left: 11.8%;
+      bottom: 6.4%;
+      display: flex;
+      align-items: center;
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      font-size: clamp(0.75rem, 1.2vw, 0.92rem);
+      color: #6b7280;
+      z-index: 12;
+      user-select: none;
+    }
+
+    /* =========================================================================
+       STAGE 2: INTERIOR CONTROL PANEL SHELL (frames, source, camera, upload)
+       ========================================================================= */
+    .interior-control-panel {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 0;
+    }
+
+    /* Double-line lightbox indicator above monitor (matching live site) */
+    .interior-lightbox-box {
+      width: 76px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: -2px;
+    }
+
+    .interior-lightbox-box svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Top Row: [eye level ->] [Double-Bordered 3:4 Monitor] [$0 = 4pics] */
+    .interior-top-row {
+      display: grid;
+      grid-template-columns: 125px 330px 125px;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .eye-level-annotation {
+      justify-self: end;
+      align-self: center;
+      margin-top: -115px;
+      width: 105px;
+    }
+
+    .eye-level-annotation svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .price-sticker-annotation {
+      justify-self: start;
+      align-self: end;
+      margin-bottom: 18px;
+      width: 108px;
+    }
+
+    .price-sticker-annotation svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Center CRT Monitor Frame */
+    .crt-monitor-box {
+      position: relative;
+      width: 330px;
+      height: 416px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .crt-bezel-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .crt-bezel-svg svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .crt-inner-viewport {
+      position: relative;
+      width: 266px;
+      height: 350px;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Interior sub-screens inside the CRT monitor */
+    .screen-view {
+      display: none;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .screen-view.active {
+      display: flex;
+    }
+
+    /* SCREEN 2: FRAME SELECTION INSIDE MONITOR */
+    .carousel-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+    }
+
+    .btn-arrow {
+      background: none;
+      border: none;
+      color: #000000;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, opacity 0.15s;
+      user-select: none;
+    }
+
+    .btn-arrow:hover {
+      transform: scale(1.22);
+    }
+
+    .frame-preview-card {
+      width: 56px;
+      height: 288px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.22));
+      transition: transform 0.25s var(--ease-spring);
+      cursor: pointer;
+    }
+
+    .frame-preview-card canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .frame-name-subtle {
+      display: none;
+    }
+
+    /* SCREEN 3: SOURCE SELECTOR INSIDE MONITOR ('take photo' / 'upload photo') */
+    .source-buttons-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .btn-source-card {
+      width: 204px;
+      height: 54px;
+      background: var(--btn-fill);
+      border: 2.5px solid #1e293b;
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      font-size: 0.96rem;
+      font-weight: 500;
+      color: var(--ink-slate);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
+    }
+
+    .btn-source-card:hover {
+      background: #111827;
+      color: #ffffff;
+    }
+
+    .btn-source-card .icon-svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* SCREEN 4A: LIVE CAMERA WORKFLOW INSIDE MONITOR */
+    .camera-monitor {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background: #18181b;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #webcamVideo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+    }
+
+    #webcamVideo.unmirrored {
+      transform: scaleX(1);
+    }
+
+    /* NATURAL STUDIO PRO WEBCAM VIEWFINDER FILTERS */
+    #webcamVideo.filter-bw {
+      /* Luminous studio monochrome: lifted midtones, radiant highlights, deep crisp blacks */
+      filter: grayscale(100%) brightness(1.05) contrast(1.22);
+    }
+
+    #webcamVideo.filter-color {
+      /* Flattering studio color: clean bright exposure, lifted shadows, warm peach undertones */
+      filter: brightness(1.04) contrast(1.05) saturate(1.08);
+    }
+
+    .hidden-canvas {
+      display: none;
+    }
+
+    .countdown-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 5.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 3px 14px rgba(0, 0, 0, 0.75);
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.15s, transform 0.2s var(--ease-spring);
+      z-index: 20;
+    }
+
+    .countdown-overlay.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .shot-counter-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #ffffff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      z-index: 22;
+    }
+
+    .camera-status-banner {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      color: #111827;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border: 1.5px solid #111827;
+      white-space: nowrap;
+      z-index: 22;
+    }
+
+    /* SCREEN 4B: 2x2 PHOTO UPLOAD WORKFLOW INSIDE MONITOR */
+    .upload-monitor-wrap {
+      width: 100%;
+      height: 100%;
+      padding: 6px 8px 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .upload-grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      width: 212px;
+      max-width: 100%;
+      margin: 0 auto;
+      align-content: center;
+    }
+
+    .upload-slot {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      background: #e5e7eb;
+      border: 2px dashed #4b5563;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .upload-slot:hover {
+      background: #d1d5db;
+      border-color: #111827;
+    }
+
+    .upload-slot.filled {
+      border-style: solid;
+      border-color: #111827;
+    }
+
+    .upload-slot .file-input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 6;
+    }
+
+    .slot-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #374151;
+      pointer-events: none;
+    }
+
+    .slot-preview {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .upload-slot.filled .slot-preview {
+      display: block;
+    }
+
+    .upload-slot.filled .slot-placeholder {
+      display: none;
+    }
+
+    .slot-replace-badge {
+      display: none;
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: rgba(17, 24, 39, 0.85);
+      color: #fff;
+      font-size: 0.62rem;
+      padding: 2px 6px;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .upload-slot.filled:hover .slot-replace-badge {
+      display: block;
+    }
+
+    .upload-helper-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      gap: 6px;
+    }
+
+    .btn-mini-helper {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      background: var(--btn-fill);
+      border: 1.5px solid #1e293b;
+      color: #1e293b;
+      cursor: pointer;
+    }
+
+    .btn-mini-helper:hover {
+      background: #111827;
+      color: #fff;
+    }
+
+    /* SCREEN 7: CAMERA ERROR FALLBACK INSIDE MONITOR */
+    .error-card {
+      padding: 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .error-card h2 {
+      font-size: 1.05rem;
+      color: #dc2626;
+    }
+
+    .error-card p {
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: #374151;
+    }
+
+    .error-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    /* MIDDLE ROW: b&w [3D Cylindrical Toggle Lever SVG] color */
+    .filter-toggle-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 2px 0 4px;
+    }
+
+    .toggle-label {
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 500;
+      color: #475569;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s ease, font-weight 0.15s ease;
+    }
+
+    .toggle-label.active-mode {
+      font-weight: 500;
+      color: #000000;
+    }
+
+    .switch-3d-peg {
+      position: relative;
+      width: 78px;
+      height: 40px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .switch-3d-peg input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-3d-peg svg {
+      width: 74px;
+      height: 38px;
+      display: block;
+      overflow: visible;
+    }
+
+    /* BOTTOM ROW: [3-Column Instruction Plaque] + [Vertical Coin & LED Button Panel] */
+    .interior-bottom-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    /* 3-Column Hand-Drawn Instruction Plaque (Screenshot 1 & 2) */
+    .instruction-plaque-3col {
+      position: relative;
+      flex: 1;
+      max-width: 548px;
+      height: 164px;
+      min-height: 164px;
+      padding: 14px 18px 14px 16px;
+      display: grid;
+      grid-template-columns: 1fr 3px 1.08fr 3px 1.05fr;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .instruction-plaque-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .instruction-plaque-svg svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .inst-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      z-index: 2;
+      text-align: left;
+      padding: 4px 2px;
+    }
+
+    .inst-num {
+      font-family: 'Patrick Hand', cursive, sans-serif;
+      font-size: 2.5rem;
+      line-height: 1;
+      font-weight: 700;
+      color: #000000;
+      flex-shrink: 0;
+    }
+
+    .inst-col p {
+      font-family: 'Patrick Hand', cursive, sans-serif;
+      font-size: 1.02rem;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #000000;
+      text-align: left;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .inst-divider {
+      width: 3px;
+      height: 114px;
+      background: #000000;
+      border-radius: 999px;
+      align-self: center;
+      z-index: 2;
+    }
+
+    /* Right Vertical Coin & Button Panel (Screenshot 1 & 2) */
+    .coin-panel-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .coin-action-label {
+      font-family: 'Patrick Hand', cursive, sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1e293b;
+      min-height: 1.5rem;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+
+    .coin-panel-chassis {
+      position: relative;
+      width: 84px;
+      height: 164px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0 12px;
+    }
+
+    .coin-panel-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .coin-panel-svg svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Circular Green / Red Hardware LED Button inside Coin Panel */
+    .physical-green-button {
+      position: relative;
+      z-index: 10;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--green-btn);
+      border: 2.5px solid #1e293b;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+      animation: ledPulseGreen 1.8s infinite;
+    }
+
+    @keyframes ledPulseGreen {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
+      50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    }
+
+    .physical-green-button:hover:not(.inactive) {
+      transform: scale(1.15);
+      background: #059669;
+    }
+
+    .physical-green-button.inactive {
+      background: var(--red-lamp);
+      animation: none;
+      cursor: default;
+    }
+
+    /* =========================================================================
+       STAGE 3: PRINTING & T-BAR CHUTE DISPENSING (#view-printing - Screenshot 3)
+       ========================================================================= */
+    .printing-stage-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      padding: 8px 0;
+    }
+
+    /* Top Square Metal Plaque with 4 Corner Screws */
+    .delivery-plaque-box {
+      position: relative;
+      width: 192px;
+      height: 174px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 14px;
+      text-align: center;
+    }
+
+    .delivery-plaque-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .delivery-plaque-svg svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .delivery-plaque-text {
+      position: relative;
+      z-index: 2;
+      font-family: 'Montserrat', 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.22;
+      color: #0f172a;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .delivery-down-arrow {
+      position: relative;
+      z-index: 2;
+      margin-top: 6px;
+      width: 28px;
+      height: 24px;
+    }
+
+    /* Tall Double-Bordered Dispensing Chute with T-Bar Retaining Cage */
+    .dispensing-chute-frame {
+      position: relative;
+      width: 192px;
+      height: 430px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chute-outer-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Inner Window Aperture where Strip Slides Down */
+    .chute-inner-aperture {
+      position: relative;
+      width: 120px;
+      height: 364px;
+      overflow: hidden;
+      z-index: 4;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 5px;
+      box-sizing: border-box;
+    }
+
+    .emerging-strip-wrapper {
+      width: 68px;
+      transform: translateY(-400px);
+      opacity: 0;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+      z-index: 3;
+      transform-origin: bottom center;
+    }
+
+    .emerging-strip-wrapper.dispensing {
+      animation: chuteGravityDrop 1.15s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+      opacity: 1;
+    }
+
+    @keyframes chuteGravityDrop {
+      0% {
+        transform: translateY(-400px) rotate(0deg);
+        opacity: 0;
+      }
+      18% {
+        opacity: 1;
+      }
+      65% {
+        /* Impact on the bottom floor of the delivery tray */
+        transform: translateY(0px) rotate(-1.2deg);
+      }
+      78% {
+        /* Gentle physics rebound */
+        transform: translateY(-12px) rotate(-0.6deg);
+      }
+      88% {
+        /* Re-landing */
+        transform: translateY(0px) rotate(-1.4deg);
+      }
+      94% {
+        /* Subtle settle */
+        transform: translateY(-2px) rotate(-1.1deg);
+      }
+      100% {
+        /* Resting firmly on the tray bottom ledge */
+        transform: translateY(0px) rotate(-1.2deg);
+        opacity: 1;
+      }
+    }
+
+    #liveCompositeCanvas {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* T-Shaped Grey Metal Retaining Cage Bar in Front of Strip (z-index: 6) */
+    .chute-tbar-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    .chute-tbar-overlay svg,
+    .chute-outer-svg svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .btn-pickup-wide {
+      width: 440px;
+      max-width: 92vw;
+      height: 44px;
+      margin-top: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease, background 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-pickup-wide.ready {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* =========================================================================
+       STAGE 4: FINAL PICKUP, SOCIAL DOODLES & SCISSORS (#view-export - Screenshot 4)
+       ========================================================================= */
+    .pickup-stage-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 680px;
+      padding: 10px 0;
+    }
+
+    .pickup-main-canvas-area {
+      position: relative;
+      width: 100%;
+      max-width: 580px;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    /* Top-Right 'your photostrip!' + Looped Curly Arrow */
+    .your-photostrip-doodle {
+      position: absolute;
+      top: 0;
+      right: 32px;
+      width: 175px;
+      pointer-events: none;
+      z-index: 10;
+      transition: top 0.25s var(--ease-spring), right 0.25s var(--ease-spring);
+    }
+
+    .pickup-main-canvas-area.cut-active .your-photostrip-doodle {
+      top: 46px;
+      right: 18px;
+    }
+
+    .your-photostrip-doodle svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Center Final Photostrip Container */
+    .final-strip-container {
+      width: 107px;
+      margin-top: 36px;
+      transition: transform 0.25s var(--ease-spring);
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .final-strip-container:hover {
+      transform: rotate(-2.5deg) scale(1.02);
+    }
+
+    .final-strip-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 4 Individual Cut Photos Grid (Vertical Stacked Cards matching Live Site) */
+    .cut-photos-grid {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      width: 107px;
+      margin-top: 32px;
+      z-index: 5;
+    }
+
+    .cut-photo-item {
+      position: relative;
+      width: 100%;
+      cursor: pointer;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.22));
+      transition: transform 0.2s var(--ease-spring);
+    }
+
+    .cut-photo-item:nth-child(1) { transform: rotate(-0.8deg); }
+    .cut-photo-item:nth-child(2) { transform: rotate(0.8deg); }
+    .cut-photo-item:nth-child(3) { transform: rotate(-0.6deg); }
+    .cut-photo-item:nth-child(4) { transform: rotate(0.7deg); }
+
+    .cut-photo-item:hover {
+      transform: scale(1.05);
+      z-index: 8;
+    }
+
+    .cut-photo-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Bottom-Left Handwritten Compliment Doodle Cluster */
+    .compliment-doodle-cluster {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      z-index: 10;
+      cursor: pointer;
+      user-select: none;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 2.8px solid #000000;
+      border-radius: 18px;
+      box-shadow: 2.5px 3.5px 0 rgba(0, 0, 0, 0.95);
+      transform: rotate(-3deg);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+      max-width: 140px;
+      text-align: center;
+    }
+
+    .compliment-doodle-cluster:hover {
+      transform: rotate(0deg) scale(1.06);
+      box-shadow: 3.5px 5px 0 #000000;
+    }
+
+    .compliment-doodle-cluster:active {
+      transform: scale(0.96) rotate(-2deg);
+      box-shadow: 1px 1px 0 #000000;
+    }
+
+    .compliment-sparkle-svg {
+      width: 28px;
+      height: 22px;
+      display: block;
+      margin-bottom: -2px;
+    }
+
+    .compliment-text {
+      font-family: 'Patrick Hand', cursive, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #000000;
+      letter-spacing: 0.2px;
+      margin: 0;
+      white-space: normal;
+      word-break: keep-all;
+    }
+
+    /* Bottom-Right Diagonal Hand-Drawn Open Scissors Button */
+    .btn-scissors-doodle {
+      position: absolute;
+      right: 24px;
+      bottom: 16px;
+      width: 104px;
+      height: 104px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 10;
+      transition: transform 0.2s var(--ease-spring);
+    }
+
+    .btn-scissors-doodle:hover {
+      transform: scale(1.12) rotate(-6deg);
+    }
+
+    .btn-scissors-doodle svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Bottom Horizontal 4-Button Action Bar (download | share | print | restart) */
+    .export-actions-toolbar {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .export-actions-toolbar .btn-crisp-box {
+      height: 40px;
+      padding: 0 18px;
+      font-size: 0.92rem;
+    }
+
+    .export-actions-toolbar .btn-crisp-box svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* Floating subtle top-right utility bar for SFX & Live Frame Switch on Export */
+    .floating-utility-pill {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      display: flex;
+      gap: 6px;
+      z-index: 90;
+    }
+
+    .btn-util-pill {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      background: rgba(241, 245, 249, 0.9);
+      border: 1.5px solid #1e293b;
+      color: #1e293b;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+
+    .btn-util-pill:hover {
+      background: #1e293b;
+      color: #fff;
+    }
+
+    /* MODALS (Support, Info, Featured Community Board) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(2px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 200;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--bg);
+      border: 3px solid #000000;
+      padding: 26px 24px;
+      max-width: 480px;
+      width: 100%;
+      max-height: 86vh;
+      overflow-y: auto;
+      position: relative;
+      text-align: center;
+      animation: stageFadeIn 0.2s ease-out;
+    }
+
+    .modal-card.wide {
+      max-width: 680px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: var(--btn-fill);
+      border: 2px solid #1e293b;
+      width: 30px;
+      height: 30px;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .modal-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .modal-card p,
+    .modal-body-content {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: #374151;
+      margin-bottom: 16px;
+    }
+
+    .modal-body-content {
+      text-align: left;
+    }
+
+    .modal-body-content h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #000;
+      margin: 12px 0 4px;
+    }
+
+    .social-links-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .btn-maybe-later {
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: #6b7280;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .community-board-grid {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 16px 8px;
+      background: #e5e5e5;
+      border: 2.5px solid #000;
+      margin-bottom: 14px;
+    }
+
+    .community-strip-card {
+      width: 96px;
+      background: #fff;
+      border: 1.5px solid #000;
+      padding: 4px;
+      box-shadow: 2px 3px 6px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* SOFTBOX STUDIO STROBE FLASH OVERLAY */
+    .camera-flash-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 45%, #ffffff 0%, #fffefa 50%, #f6f0e4 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 150;
+      transition: opacity 0.32s cubic-bezier(0.1, 0.8, 0.2, 1);
+    }
+
+    .camera-flash-overlay.flash-active {
+      opacity: 0.96;
+      transition: none;
+    }
+
+    /* RESPONSIVE ADAPTATION */
+    @media (max-width: 680px) {
+      #booth-app {
+        padding: 8px 6px;
+      }
+      /* Mobile Screen 1: Scale Enter button & Creator attribution inside booth */
+      .btn-sketch-enter {
+        width: 96px;
+        height: 40px;
+        font-size: 0.82rem;
+        gap: 4px;
+        border-width: 2px;
+      }
+      .btn-sketch-enter svg {
+        width: 15px;
+        height: 15px;
+      }
+      .booth-wall-attribution {
+        left: 11.5%;
+        bottom: 5.8%;
+        font-size: 0.58rem;
+      }
+      /* Mobile Screen 2/3/4: Compact interior layout with zero scroll overflow */
+      .interior-control-panel {
+        gap: 6px;
+      }
+      .interior-top-row {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+      .eye-level-annotation,
+      .price-sticker-annotation {
+        display: none;
+      }
+      .crt-monitor-box {
+        width: 280px;
+        height: 348px;
+      }
+      .crt-inner-viewport {
+        width: 224px;
+        height: 292px;
+      }
+      .frame-preview-card {
+        width: 48px;
+        height: 246px;
+      }
+      .upload-grid-2x2 {
+        width: 180px;
+        gap: 5px;
+      }
+      .upload-monitor-wrap {
+        padding: 5px;
+      }
+      .interior-bottom-row {
+        flex-direction: row;
+        align-items: flex-end;
+        gap: 8px;
+      }
+      .instruction-plaque-3col {
+        grid-template-columns: 1fr 2px 1.15fr 2px 1.05fr;
+        height: 124px;
+        min-height: 124px;
+        padding: 8px 8px;
+        gap: 5px;
+      }
+      .inst-divider {
+        width: 2px;
+        height: 86px;
+      }
+      .inst-col {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 2px 2px;
+      }
+      .inst-num {
+        font-family: 'Patrick Hand', cursive, sans-serif;
+        font-size: 1.6rem;
+        margin-top: -2px;
+      }
+      .inst-col p {
+        font-family: 'Patrick Hand', cursive, sans-serif;
+        font-size: 0.72rem;
+        line-height: 1.18;
+        white-space: normal;
+        text-align: left;
+      }
+      .coin-panel-chassis {
+        width: 64px;
+        height: 124px;
+        padding: 10px 0 8px;
+      }
+      .coin-action-label {
+        font-family: 'Patrick Hand', cursive, sans-serif;
+        font-size: 0.95rem;
+      }
+      /* Move floating utility pill to top-right on mobile so it never overlaps plaque */
+      .floating-utility-pill {
+        top: 10px;
+        right: 10px;
+        bottom: auto;
+      }
+      /* Mobile Screen 6: Prevent 2x2 cut grid from colliding with tag-me or scissors */
+      .pickup-main-canvas-area {
+        min-height: 440px;
+      }
+      .cut-photos-grid {
+        width: 107px;
+        margin-top: 24px;
+        gap: 8px;
+      }
+      .compliment-doodle-cluster {
+        left: 6px;
+        bottom: 8px;
+        padding: 6px 10px;
+        max-width: 110px;
+      }
+      .compliment-text {
+        font-size: 0.95rem;
+      }
+      .compliment-sparkle-svg {
+        width: 22px;
+        height: 18px;
+      }
+      .btn-scissors-doodle {
+        right: 6px;
+        bottom: 8px;
+        width: 82px;
+        height: 82px;
+      }
+      .your-photostrip-doodle {
+        right: 6px;
+        width: 138px;
+      }
+      .pickup-main-canvas-area.cut-active .your-photostrip-doodle {
+        top: 24px;
+        right: 6px;
+      }
+    }
