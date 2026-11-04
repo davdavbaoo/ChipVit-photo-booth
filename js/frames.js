@@ -5,8 +5,10 @@
 (function (window) {
   'use strict';
 
-  // 10 authentic photostrip frames matching live photobooth specification
+  // 12 authentic photostrip frames matching live photobooth specification
   const FRAMES = [
+    { id: 'frame-ppg-bubbles-birthday', name: 'Powerpuff Trio Birthday Frame', type: 'ppg-birthday', bg: '#ffd5e5', pad: 14, borderColor: '#ffffff', borderWidth: 3, mockFill: '#ffe4ee', canvaUrl: 'https://canva.link/llcwp3flj6xcsug' },
+    { id: 'frame-ppg-bubbles-peeking', name: 'Bubbles Two-Tone Peeking Frame', type: 'ppg-peeking', bg: '#d5e3f8', pad: 14, borderColor: '#ffffff', borderWidth: 3, mockFill: '#eef5fd', canvaUrl: 'https://canva.link/yfrdzfrc73x63hx' },
     { id: 'frame-black', name: 'Black Frame', bg: '#111111', pad: 14, borderColor: '#000000', borderWidth: 4, mockFill: '#777777' },
     { id: 'frame-white', name: 'White Frame', bg: '#f1f1f1', pad: 12, borderColor: '#e2e2e2', borderWidth: 3, mockFill: '#777777' },
     { id: 'frame-hearts-cutout', name: 'Hearts Cutout Frame', bg: '#ffd6dc', pad: 40, cutout: 'heart', borderColor: '#9b2335', borderWidth: 6, mockFill: '#777777' },
@@ -26,10 +28,74 @@
     photoH: 768
   };
 
+  // Preload high-res transparent Canva Powerpuff Girls Bubbles Birthday Frame Overlay
+  const ppgBirthdayOverlay = new Image();
+  ppgBirthdayOverlay.onload = function () {
+    if (window.updateFrameCarouselPreview) {
+      window.updateFrameCarouselPreview();
+    }
+  };
+  ppgBirthdayOverlay.src = './assets/ppg_birthday_frame.png';
+  window.ppgBirthdayOverlay = ppgBirthdayOverlay;
+
+  // Preload high-res transparent Canva Powerpuff Girls Bubbles Peeking Two-Tone Overlay
+  const ppgPeekingOverlay = new Image();
+  ppgPeekingOverlay.onload = function () {
+    if (window.updateFrameCarouselPreview) {
+      window.updateFrameCarouselPreview();
+    }
+  };
+  ppgPeekingOverlay.src = './assets/ppg_bubbles_peeking_frame.png';
+  window.ppgPeekingOverlay = ppgPeekingOverlay;
+
+  function drawRoundedRectPath(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
   // Computes slot positions: tall narrow strip with 4 portrait (3:4) photos
   function computeStripLayout(frameObj) {
     const W = STRIP_GEO.width;
     const slots = [];
+    if (frameObj.type === 'ppg-peeking') {
+      const headerH = 60;
+      const footerH = 120;
+      const sidePad = 14;
+      const gap = 14;
+      const centerBandH = 320;
+      const pw = W - sidePad * 2; // 572
+      const ph = 763;
+      slots.push({ x: sidePad, y: headerH, w: pw, h: ph });
+      slots.push({ x: sidePad, y: headerH + ph + gap, w: pw, h: ph });
+      const slot3Y = headerH + ph + gap + ph + centerBandH;
+      slots.push({ x: sidePad, y: slot3Y, w: pw, h: ph });
+      slots.push({ x: sidePad, y: slot3Y + ph + gap, w: pw, h: ph });
+      const H = slot3Y + ph + gap + ph + footerH; // 3580
+      return { W, H, slots };
+    }
+    if (frameObj.type === 'ppg-birthday') {
+      const headerH = 335;
+      const footerH = 371;
+      const sidePad = 14;
+      const slotGap = 14;
+      const pw = W - sidePad * 2; // 572
+      const ph = 763;
+      let y = headerH;
+      for (let i = 0; i < 4; i++) {
+        slots.push({ x: sidePad, y, w: pw, h: ph });
+        y += ph + slotGap;
+      }
+      return { W, H: y - slotGap + footerH, slots }; // 3800
+    }
     if (frameObj.labelText) {
       const side = 12;
       const band = 40;
@@ -232,13 +298,30 @@
     const ctx = targetCanvas.getContext('2d');
 
     // 1. Strip paper background
-    ctx.fillStyle = frameObj.bg;
-    ctx.fillRect(0, 0, W, H);
+    if (frameObj.type === 'ppg-peeking') {
+      const splitY = 1760;
+      ctx.fillStyle = '#d5e3f8';
+      ctx.fillRect(0, 0, W, splitY);
+      ctx.fillStyle = '#fef8b8';
+      ctx.fillRect(0, splitY, W, H - splitY);
+    } else if (frameObj.type === 'ppg-birthday') {
+      const grad = ctx.createLinearGradient(0, 0, 0, H);
+      grad.addColorStop(0, '#ffd5e5'); // Blossom Pink
+      grad.addColorStop(0.5, '#d5e8fc'); // Bubbles Baby Blue
+      grad.addColorStop(1, '#d6f5e3'); // Buttercup Mint Green
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+    } else {
+      ctx.fillStyle = frameObj.bg;
+      ctx.fillRect(0, 0, W, H);
+    }
 
     // 2. Photos (or neutral grey placeholders in carousel preview)
     slots.forEach((s, idx) => {
       ctx.save();
-      if (frameObj.cutout === 'heart') {
+      if (frameObj.type === 'ppg-birthday' || frameObj.type === 'ppg-peeking') {
+        drawRoundedRectPath(ctx, s.x, s.y, s.w, s.h, 20);
+      } else if (frameObj.cutout === 'heart') {
         const hx = s.x + 8, hy = s.y + 12, hw = s.w - 16, hh = s.h - 24;
         createHeartPath(ctx, hx, hy, hw, hh);
       } else {
@@ -257,23 +340,25 @@
       }
       ctx.restore();
 
-      // Thin aperture outline
-      ctx.save();
-      if (frameObj.cutout === 'heart') {
-        const hx = s.x + 8, hy = s.y + 12, hw = s.w - 16, hh = s.h - 24;
-        createHeartPath(ctx, hx, hy, hw, hh);
-        ctx.strokeStyle = frameObj.borderColor;
-        ctx.lineWidth = frameObj.borderWidth;
-        ctx.stroke();
-        createHeartPath(ctx, hx + 5, hy - 4, hw - 10, hh);
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
-      } else {
-        ctx.strokeStyle = frameObj.borderColor;
-        ctx.lineWidth = frameObj.borderWidth;
-        ctx.strokeRect(s.x, s.y, s.w, s.h);
+      // Thin aperture outline (overlay already contains authentic doodle borders for ppg frames)
+      if (frameObj.type !== 'ppg-birthday' && frameObj.type !== 'ppg-peeking') {
+        ctx.save();
+        if (frameObj.cutout === 'heart') {
+          const hx = s.x + 8, hy = s.y + 12, hw = s.w - 16, hh = s.h - 24;
+          createHeartPath(ctx, hx, hy, hw, hh);
+          ctx.strokeStyle = frameObj.borderColor;
+          ctx.lineWidth = frameObj.borderWidth;
+          ctx.stroke();
+          createHeartPath(ctx, hx + 5, hy - 4, hw - 10, hh);
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+        } else {
+          ctx.strokeStyle = frameObj.borderColor;
+          ctx.lineWidth = frameObj.borderWidth;
+          ctx.strokeRect(s.x, s.y, s.w, s.h);
+        }
+        ctx.restore();
       }
-      ctx.restore();
 
       // Small label band above each photo
       if (frameObj.labelText) {
@@ -287,8 +372,18 @@
       }
     });
 
-    // 3. Frame-specific doodles
-    drawFrameDecorations(ctx, frameObj, layout);
+    // 3. Overlay / Frame-specific doodles
+    if (frameObj.type === 'ppg-peeking') {
+      if (window.ppgPeekingOverlay && window.ppgPeekingOverlay.complete && window.ppgPeekingOverlay.naturalWidth > 0) {
+        ctx.drawImage(window.ppgPeekingOverlay, 0, 0, W, H);
+      }
+    } else if (frameObj.type === 'ppg-birthday') {
+      if (window.ppgBirthdayOverlay && window.ppgBirthdayOverlay.complete && window.ppgBirthdayOverlay.naturalWidth > 0) {
+        ctx.drawImage(window.ppgBirthdayOverlay, 0, 0, W, H);
+      }
+    } else {
+      drawFrameDecorations(ctx, frameObj, layout);
+    }
     return layout;
   }
 
@@ -296,6 +391,7 @@
   window.FRAMES = FRAMES;
   window.STRIP_GEO = STRIP_GEO;
   window.computeStripLayout = computeStripLayout;
+  window.drawRoundedRectPath = drawRoundedRectPath;
   window.createHeartPath = createHeartPath;
   window.drawMiniHeart = drawMiniHeart;
   window.drawRibbonBow = drawRibbonBow;

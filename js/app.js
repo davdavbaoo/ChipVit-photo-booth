@@ -118,6 +118,7 @@
     complimentText: document.getElementById('complimentText'),
     btnScissorsCut: document.getElementById('btnScissorsCut'),
     btnDownload: document.getElementById('btnDownload'),
+    btnCanvaEdit: document.getElementById('btnCanvaEdit'),
     btnShare: document.getElementById('btnShare'),
     btnPrint: document.getElementById('btnPrint'),
     btnSwitchFrameLive: document.getElementById('btnSwitchFrameLive'),
@@ -305,8 +306,13 @@
 
     const STRIP_CONFIGS = [
       {
+        frame: window.FRAMES[0],
+        filter: 'color',
+        poses: ['bubbles_peace', 'blossom_heart', 'buttercup_sassy', 'bubbles_cheek_poke']
+      },
+      {
         frame: window.FRAMES[1] || window.FRAMES[0],
-        filter: 'bw',
+        filter: 'color',
         poses: ['bubbles_peace', 'blossom_heart', 'buttercup_sassy', 'ppg_group_hug']
       },
       {
@@ -320,14 +326,9 @@
         poses: ['bubbles_cheek_poke', 'buttercup_sassy', 'bubbles_peace', 'blossom_heart']
       },
       {
-        frame: window.FRAMES[6] || window.FRAMES[1],
+        frame: window.FRAMES[7] || window.FRAMES[6],
         filter: 'bw',
         poses: ['buttercup_sassy', 'blossom_chin_rest', 'bubbles_peace', 'ppg_group_hug']
-      },
-      {
-        frame: window.FRAMES[9] || window.FRAMES[8] || window.FRAMES[0],
-        filter: 'color',
-        poses: ['blossom_chin_rest', 'bubbles_peace', 'blossom_heart', 'buttercup_sassy']
       }
     ];
 
@@ -459,6 +460,9 @@
      ========================================================================= */
   function buildExportViewAssets() {
     const currentFrame = window.FRAMES[state.selectedFrameIndex];
+    if (el.btnCanvaEdit) {
+      el.btnCanvaEdit.href = currentFrame.canvaUrl || 'https://canva.link/llcwp3flj6xcsug';
+    }
     const layout = window.renderPhotostripToCanvas(
       el.liveCompositeCanvas,
       state.capturedPhotos,
