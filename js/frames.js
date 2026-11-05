@@ -7,8 +7,8 @@
 
   // 12 authentic photostrip frames matching live photobooth specification
   const FRAMES = [
-    { id: 'frame-ppg-bubbles-birthday', name: 'Powerpuff Trio Birthday Frame', type: 'ppg-birthday', bg: '#ffd5e5', pad: 14, borderColor: '#ffffff', borderWidth: 3, mockFill: '#ffe4ee', canvaUrl: 'https://canva.link/llcwp3flj6xcsug' },
-    { id: 'frame-ppg-bubbles-peeking', name: 'Bubbles Two-Tone Peeking Frame', type: 'ppg-peeking', bg: '#d5e3f8', pad: 14, borderColor: '#ffffff', borderWidth: 3, mockFill: '#eef5fd', canvaUrl: 'https://canva.link/yfrdzfrc73x63hx' },
+    { id: 'frame-ppg-bubbles-birthday', name: 'Powerpuff Trio Birthday Frame', type: 'ppg-birthday', bg: '#ffd5e5', pad: 14, borderColor: '#ffffff', borderWidth: 3, mockFill: '#ffe4ee' },
+    { id: 'frame-ppg-bubbles-peeking', name: 'Bubbles Two-Tone Peeking Frame', type: 'ppg-peeking', bg: '#d5e3f8', pad: 14, borderColor: '#ffffff', borderWidth: 3, mockFill: '#eef5fd' },
     { id: 'frame-black', name: 'Black Frame', bg: '#111111', pad: 14, borderColor: '#000000', borderWidth: 4, mockFill: '#777777' },
     { id: 'frame-white', name: 'White Frame', bg: '#f1f1f1', pad: 12, borderColor: '#e2e2e2', borderWidth: 3, mockFill: '#777777' },
     { id: 'frame-hearts-cutout', name: 'Hearts Cutout Frame', bg: '#ffd6dc', pad: 40, cutout: 'heart', borderColor: '#9b2335', borderWidth: 6, mockFill: '#777777' },

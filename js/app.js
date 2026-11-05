@@ -118,7 +118,6 @@
     complimentText: document.getElementById('complimentText'),
     btnScissorsCut: document.getElementById('btnScissorsCut'),
     btnDownload: document.getElementById('btnDownload'),
-    btnCanvaEdit: document.getElementById('btnCanvaEdit'),
     btnShare: document.getElementById('btnShare'),
     btnPrint: document.getElementById('btnPrint'),
     btnSwitchFrameLive: document.getElementById('btnSwitchFrameLive'),
@@ -460,9 +459,6 @@
      ========================================================================= */
   function buildExportViewAssets() {
     const currentFrame = window.FRAMES[state.selectedFrameIndex];
-    if (el.btnCanvaEdit) {
-      el.btnCanvaEdit.href = currentFrame.canvaUrl || 'https://canva.link/llcwp3flj6xcsug';
-    }
     const layout = window.renderPhotostripToCanvas(
       el.liveCompositeCanvas,
       state.capturedPhotos,
