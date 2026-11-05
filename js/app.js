@@ -472,41 +472,74 @@
     );
 
     el.finalStripContainer.innerHTML = '';
-    const finalImg = document.createElement('img');
-    finalImg.src = el.liveCompositeCanvas.toDataURL('image/png');
-    finalImg.alt = 'Final Vintage Photostrip';
-    el.finalStripContainer.appendChild(finalImg);
+    try {
+      const finalImg = document.createElement('img');
+      finalImg.src = el.liveCompositeCanvas.toDataURL('image/png');
+      finalImg.alt = 'Final Vintage Photostrip';
+      el.finalStripContainer.appendChild(finalImg);
+    } catch (taintErr) {
+      console.warn('Canvas toDataURL restricted or tainted, falling back to live canvas element:', taintErr);
+      const fallbackCanvas = document.createElement('canvas');
+      fallbackCanvas.width = el.liveCompositeCanvas.width;
+      fallbackCanvas.height = el.liveCompositeCanvas.height;
+      fallbackCanvas.style.width = '100%';
+      fallbackCanvas.style.height = 'auto';
+      fallbackCanvas.style.display = 'block';
+      const fctx = fallbackCanvas.getContext('2d');
+      fctx.drawImage(el.liveCompositeCanvas, 0, 0);
+      el.finalStripContainer.appendChild(fallbackCanvas);
+    }
 
     state.cutPhotoDataUrls = [];
     el.cutPhotosGrid.innerHTML = '';
-    const sliceH = layout.H / 4;
+    const sliceH = (layout && layout.H) ? (layout.H / 4) : (el.liveCompositeCanvas.height / 4);
+    const sliceW = (layout && layout.W) ? layout.W : el.liveCompositeCanvas.width;
+
     for (let i = 0; i < 4; i++) {
       const singleCanvas = document.createElement('canvas');
-      singleCanvas.width = layout.W;
+      singleCanvas.width = sliceW;
       singleCanvas.height = Math.round(sliceH);
       const sctx = singleCanvas.getContext('2d');
       sctx.drawImage(
         el.liveCompositeCanvas,
-        0, Math.round(i * sliceH), layout.W, Math.round(sliceH),
-        0, 0, layout.W, Math.round(sliceH)
+        0, Math.round(i * sliceH), sliceW, Math.round(sliceH),
+        0, 0, sliceW, Math.round(sliceH)
       );
 
-      const url = singleCanvas.toDataURL('image/png');
-      state.cutPhotoDataUrls.push(url);
+      let url = '';
+      try {
+        url = singleCanvas.toDataURL('image/png');
+        state.cutPhotoDataUrls.push(url);
+      } catch (err) {
+        console.warn('Single canvas slice toDataURL fallback for slice', i, err);
+      }
 
       const itemDiv = document.createElement('div');
       itemDiv.className = 'cut-photo-item';
       itemDiv.title = `Click to download Photo #${i + 1}`;
-      itemDiv.innerHTML = `<img src="${url}" alt="Cut Photo ${i + 1}">`;
+      if (url) {
+        itemDiv.innerHTML = `<img src="${url}" alt="Cut Photo ${i + 1}">`;
+      } else {
+        singleCanvas.style.width = '100%';
+        singleCanvas.style.height = 'auto';
+        singleCanvas.style.display = 'block';
+        itemDiv.appendChild(singleCanvas);
+      }
       itemDiv.addEventListener('click', () => {
-        downloadDataUrl(url, `mysketchbooth-photo-${i + 1}.png`);
+        if (url) {
+          downloadDataUrl(url, `mysketchbooth-photo-${i + 1}.png`);
+        }
       });
       el.cutPhotosGrid.appendChild(itemDiv);
     }
   }
 
   function transitionToExportView() {
-    buildExportViewAssets();
+    try {
+      buildExportViewAssets();
+    } catch (renderErr) {
+      console.error('buildExportViewAssets error:', renderErr);
+    }
     state.isStripCut = false;
     syncScissorsUI();
     updateComplimentDisplay();

@@ -35,7 +35,9 @@
       window.updateFrameCarouselPreview();
     }
   };
-  ppgBirthdayOverlay.src = './assets/ppg_birthday_frame.png';
+  ppgBirthdayOverlay.src = (window.PPG_OVERLAYS && window.PPG_OVERLAYS.birthday)
+    ? window.PPG_OVERLAYS.birthday
+    : './assets/ppg_birthday_frame.png';
   window.ppgBirthdayOverlay = ppgBirthdayOverlay;
 
   // Preload high-res transparent Canva Powerpuff Girls Bubbles Peeking Two-Tone Overlay
@@ -45,7 +47,9 @@
       window.updateFrameCarouselPreview();
     }
   };
-  ppgPeekingOverlay.src = './assets/ppg_bubbles_peeking_frame.png';
+  ppgPeekingOverlay.src = (window.PPG_OVERLAYS && window.PPG_OVERLAYS.peeking)
+    ? window.PPG_OVERLAYS.peeking
+    : './assets/ppg_bubbles_peeking_frame.png';
   window.ppgPeekingOverlay = ppgPeekingOverlay;
 
   function drawRoundedRectPath(ctx, x, y, w, h, r) {
