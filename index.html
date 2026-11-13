@@ -214,7 +214,10 @@
                   <canvas id="cameraStreamCanvas" class="hidden-canvas"></canvas>
                   <div class="countdown-overlay" id="countdownOverlay">5</div>
                   <div class="shot-counter-badge" id="shotCounterBadge">SHOT 1/4</div>
-                  <button type="button" class="btn-timer-pill" id="btnTimerToggle" title="Countdown timer: 5s (click to switch to 3s)">⏱️ 5s</button>
+                  <div class="timer-segmented-pill" id="timerSegmentedPill" role="group" aria-label="Photo countdown timer">
+                    <button type="button" class="timer-seg-btn" id="btnTimer3s" data-time="3" title="Set 3-second countdown">3s</button>
+                    <button type="button" class="timer-seg-btn active" id="btnTimer5s" data-time="5" title="Set 5-second countdown">5s</button>
+                  </div>
                   <button type="button" class="btn-mini-helper" id="btnCameraBack" style="position:absolute;top:8px;right:8px;z-index:25;">← back</button>
                   <div class="camera-status-banner" id="cameraStatusBanner">Click green 'start' button!</div>
                 </div>

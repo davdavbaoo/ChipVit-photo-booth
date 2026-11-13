@@ -550,35 +550,58 @@
       transform: scale(1);
     }
 
-    .btn-timer-pill {
+    .timer-segmented-pill {
       position: absolute;
       top: 8px;
       left: 50%;
       transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: rgba(0, 0, 0, 0.65);
-      color: #ffffff;
       border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 12px;
-      padding: 2px 10px;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 700;
-      cursor: pointer;
+      border-radius: 16px;
+      padding: 2px;
+      gap: 2px;
       z-index: 24;
       transition: all 0.15s ease;
       user-select: none;
     }
 
-    .btn-timer-pill:hover {
-      background: rgba(0, 0, 0, 0.85);
-      border-color: rgba(255, 255, 255, 0.8);
-      transform: translateX(-50%) scale(1.05);
-    }
-
-    .btn-timer-pill.hidden {
+    .timer-segmented-pill.hidden {
       opacity: 0;
       pointer-events: none;
       transform: translateX(-50%) scale(0.85);
+    }
+
+    .timer-seg-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.65);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      cursor: pointer;
+      line-height: 1.2;
+      text-align: center;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+    }
+
+    .timer-seg-btn:hover:not(.active) {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .timer-seg-btn.active {
+      background: #ffffff;
+      color: #111827;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     }
 
     .shot-counter-badge {

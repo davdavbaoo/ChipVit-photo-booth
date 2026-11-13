@@ -105,7 +105,9 @@
     cameraStreamCanvas: document.getElementById('cameraStreamCanvas'),
     countdownOverlay: document.getElementById('countdownOverlay'),
     shotCounterBadge: document.getElementById('shotCounterBadge'),
-    btnTimerToggle: document.getElementById('btnTimerToggle'),
+    timerSegmentedPill: document.getElementById('timerSegmentedPill'),
+    btnTimer3s: document.getElementById('btnTimer3s'),
+    btnTimer5s: document.getElementById('btnTimer5s'),
     cameraStatusBanner: document.getElementById('cameraStatusBanner'),
     btnUploadBack: document.getElementById('btnUploadBack'),
     btnFillSamplePhotos: document.getElementById('btnFillSamplePhotos'),
@@ -717,16 +719,37 @@
       switchScreen('frames');
     });
 
-    if (el.btnTimerToggle) {
-      el.btnTimerToggle.addEventListener('click', () => {
-        if (state.isCapturingSequence) return;
-        window.audioEngine.playClick(520);
-        state.timerDuration = state.timerDuration === 5 ? 3 : 5;
-        el.btnTimerToggle.textContent = `⏱️ ${state.timerDuration}s`;
-        el.btnTimerToggle.title = `Countdown timer: ${state.timerDuration}s (click to switch to ${state.timerDuration === 5 ? '3s' : '5s'})`;
-        if (el.countdownOverlay) {
-          el.countdownOverlay.textContent = String(state.timerDuration);
-        }
+    function setTimerDuration(duration) {
+      if (state.isCapturingSequence) return;
+      if (state.timerDuration === duration) return;
+      window.audioEngine.playClick(520);
+      state.timerDuration = duration;
+      if (el.btnTimer3s && el.btnTimer5s) {
+        el.btnTimer3s.classList.toggle('active', duration === 3);
+        el.btnTimer5s.classList.toggle('active', duration === 5);
+      }
+      if (el.countdownOverlay) {
+        el.countdownOverlay.textContent = String(duration);
+      }
+    }
+
+    if (el.btnTimer3s) {
+      el.btnTimer3s.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setTimerDuration(3);
+      });
+    }
+
+    if (el.btnTimer5s) {
+      el.btnTimer5s.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setTimerDuration(5);
+      });
+    }
+
+    if (el.timerSegmentedPill) {
+      el.timerSegmentedPill.addEventListener('click', () => {
+        setTimerDuration(state.timerDuration === 5 ? 3 : 5);
       });
     }
 

@@ -74,9 +74,12 @@
       state.webcamStream = stream;
       el.webcamVideo.srcObject = stream;
       await el.webcamVideo.play();
-      if (el.btnTimerToggle) {
-        el.btnTimerToggle.classList.remove('hidden');
-        el.btnTimerToggle.textContent = `⏱️ ${state.timerDuration || 5}s`;
+      if (el.timerSegmentedPill) {
+        el.timerSegmentedPill.classList.remove('hidden');
+      }
+      if (el.btnTimer3s && el.btnTimer5s) {
+        el.btnTimer3s.classList.toggle('active', (state.timerDuration || 5) === 3);
+        el.btnTimer5s.classList.toggle('active', (state.timerDuration || 5) === 5);
       }
       if (el.countdownOverlay) {
         el.countdownOverlay.textContent = String(state.timerDuration || 5);
@@ -110,8 +113,8 @@
 
     el.btnGreenSelect.classList.add('inactive');
     el.greenBtnLabel.textContent = '';
-    if (el.btnTimerToggle) {
-      el.btnTimerToggle.classList.add('hidden');
+    if (el.timerSegmentedPill) {
+      el.timerSegmentedPill.classList.add('hidden');
     }
 
     const capturedFrames = [];
@@ -149,8 +152,8 @@
     }
 
     state.isCapturingSequence = false;
-    if (el.btnTimerToggle) {
-      el.btnTimerToggle.classList.remove('hidden');
+    if (el.timerSegmentedPill) {
+      el.timerSegmentedPill.classList.remove('hidden');
     }
     stopCameraStream();
     window.transitionToPrinting(capturedFrames);
