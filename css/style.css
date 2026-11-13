@@ -550,6 +550,37 @@
       transform: scale(1);
     }
 
+    .btn-timer-pill {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.65);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 24;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .btn-timer-pill:hover {
+      background: rgba(0, 0, 0, 0.85);
+      border-color: rgba(255, 255, 255, 0.8);
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    .btn-timer-pill.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) scale(0.85);
+    }
+
     .shot-counter-badge {
       position: absolute;
       top: 8px;

@@ -69,6 +69,7 @@
     cameraMirrored: true,
     webcamStream: null,
     isCapturingSequence: false,
+    timerDuration: 5,
     capturedPhotos: [null, null, null, null],
     uploadedPhotos: [null, null, null, null],
     activePhotoSource: 'camera',
@@ -104,6 +105,7 @@
     cameraStreamCanvas: document.getElementById('cameraStreamCanvas'),
     countdownOverlay: document.getElementById('countdownOverlay'),
     shotCounterBadge: document.getElementById('shotCounterBadge'),
+    btnTimerToggle: document.getElementById('btnTimerToggle'),
     cameraStatusBanner: document.getElementById('cameraStatusBanner'),
     btnUploadBack: document.getElementById('btnUploadBack'),
     btnFillSamplePhotos: document.getElementById('btnFillSamplePhotos'),
@@ -714,6 +716,19 @@
       window.audioEngine.playClick(450);
       switchScreen('frames');
     });
+
+    if (el.btnTimerToggle) {
+      el.btnTimerToggle.addEventListener('click', () => {
+        if (state.isCapturingSequence) return;
+        window.audioEngine.playClick(520);
+        state.timerDuration = state.timerDuration === 5 ? 3 : 5;
+        el.btnTimerToggle.textContent = `⏱️ ${state.timerDuration}s`;
+        el.btnTimerToggle.title = `Countdown timer: ${state.timerDuration}s (click to switch to ${state.timerDuration === 5 ? '3s' : '5s'})`;
+        if (el.countdownOverlay) {
+          el.countdownOverlay.textContent = String(state.timerDuration);
+        }
+      });
+    }
 
     el.btnCameraBack.addEventListener('click', () => {
       if (state.isCapturingSequence) return;

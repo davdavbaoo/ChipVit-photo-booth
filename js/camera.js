@@ -74,6 +74,14 @@
       state.webcamStream = stream;
       el.webcamVideo.srcObject = stream;
       await el.webcamVideo.play();
+      if (el.btnTimerToggle) {
+        el.btnTimerToggle.classList.remove('hidden');
+        el.btnTimerToggle.textContent = `⏱️ ${state.timerDuration || 5}s`;
+      }
+      if (el.countdownOverlay) {
+        el.countdownOverlay.textContent = String(state.timerDuration || 5);
+        el.countdownOverlay.classList.remove('visible');
+      }
       el.cameraStatusBanner.textContent = "Click green 'start' button!";
     } catch (err) {
       console.warn('Webcam unavailable:', err);
@@ -102,6 +110,9 @@
 
     el.btnGreenSelect.classList.add('inactive');
     el.greenBtnLabel.textContent = '';
+    if (el.btnTimerToggle) {
+      el.btnTimerToggle.classList.add('hidden');
+    }
 
     const capturedFrames = [];
 
@@ -109,7 +120,8 @@
       el.shotCounterBadge.textContent = `SHOT ${shotIndex + 1}/4`;
       el.cameraStatusBanner.textContent = `Pose #${shotIndex + 1}...`;
 
-      for (let count = 3; count >= 1; count--) {
+      const duration = (state && state.timerDuration) ? state.timerDuration : 5;
+      for (let count = duration; count >= 1; count--) {
         el.countdownOverlay.textContent = String(count);
         el.countdownOverlay.classList.add('visible');
         audioEngine.playBeep(count === 1 ? 1760 : 880);
@@ -137,6 +149,9 @@
     }
 
     state.isCapturingSequence = false;
+    if (el.btnTimerToggle) {
+      el.btnTimerToggle.classList.remove('hidden');
+    }
     stopCameraStream();
     window.transitionToPrinting(capturedFrames);
   }
